@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.css'>
+
+    <style>
+        body {
+            -webkit-user-drag: none;
+            height: 100vh;
+
+            background: url(./Landscape.png) no-repeat center center/cover;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            font-family: 'Press Start 2P', cursive;
+            color: yellow;
+            text-shadow: black 0.1em 0.1em 0.2em;
+            overflow: hidden;
+        }
+
+
+        #circle {
+            background: rgb(255, 254, 241);
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            position: relative;
+            border-radius: 50%;
+            box-shadow: 0px 0px 20px rgb(255, 253, 234);
+            top: calc(50% - 150px);
+            transition: 1s;
+        }
+
+        #clock {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #ffe25a;
+        }
+
+        #cat {
+            width: 50px;
+            height: 190px;
+            /* background-color: lightskyblue; */
+            position: absolute;
+            top: -40px;
+            left: calc(50% - 25px);
+            transform-origin: center bottom;
+            /* transition: 1s; */
+            /* animation: jump 10s linear 0s infinite normal both; */
+        }
+
+        .shake {
+            animation: shake 0.5s infinite, rainbow 3s linear 0s infinite normal both;
+        }
+
+        .sec {
+            animation: rotate 60s linear 0s infinite normal both;
+        }
+
+        .cart {
+            animation: cart 0.5s linear;
+        }
+
+        .crazy {
+            animation: cart 1s linear 0s infinite normal both;
+        }
+
+        .rainbow {
+            animation: rainbow 3s linear 0s infinite normal both, cart 1s linear 0s infinite normal both;
+        }
+
+        @keyframes cart {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(-180deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+
+        #cat img {
+            width: 150px;
+            position: absolute;
+            right: calc(50% - 75px);
+            top: -75px;
+            /* transform: translate(50%, -50%); */
+            /* rotate: 90deg; */
+            transition: 0.5s;
+        }
+
+        #text {
+            width: 100%;
+            position: absolute;
+            bottom: 10%;
+            text-align: center;
+            color: yellow;
+            text-shadow: black 0.1em 0.1em 0.2em;
+            animation: fade 1.5s linear infinite;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        @keyframes rainbow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            50% {
+                filter: hue-rotate(180deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        #prompt {
+            position: absolute;
+            width: 500px;
+            height: 350px;
+            background: #fff;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 1;
+            border: 4px solid #888;
+            text-align: center;
+            display: none;
+        }
+
+        #bar {
+            width: 100%;
+            height: 35px;
+            background: rgb(253, 255, 163);
+            border-bottom: 4px solid #888;
+        }
+
+        #promptText {
+            width: 500px;
+            height: 100px;
+            line-height: 100px;
+            font-size: 25px;
+        }
+
+        #container {
+            width: 100%;
+            height: 215px;
+        }
+
+        #left {
+            width: 100px;
+            height: 100%;
+            float: left;
+        }
+
+        #center {
+            width: 300px;
+            height: 100%;
+            float: left;
+            line-height: 90px;
+            font-size: 55px;
+            margin-top: 20px;
+        }
+
+        #right {
+            width: 100px;
+            height: 100%;
+            float: right;
+        }
+
+        #set {
+            width: 100px;
+            height: 40px;
+            background: #ef97c7;
+            border: 3px solid #fdffa3;
+            box-shadow: 3px 3px 2px #555;
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            color: #ff0;
+            border-radius: 5px;
+            /* text-shadow: black 0.1em 0.1em 0.2em; */
+        }
+
+        #addH,
+        #minusH,
+        #addM,
+        #minusM {
+            width: 64px;
+            height: 64px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="prompt" class="animate__bounceIn">
+        <div id="bar"></div>
+        <div id="promptText">set alarm to</div>
+        <div id="container">
+            <div id="left">
+                <img id="addH" class="top" src="./topbtn1.png">
+                <img id="minusH" class="btm" src="./downbtn01.png">
+            </div>
+            <div id="center">
+                <span id="alarmH">00</span>:<span id="alarmM">00</span>
+                <input type="button" value="SET!" id="set">
+            </div>
+            <div id="right">
+                <img id="addM" class="top" src="./topbtn1.png">
+                <img id="minusM" class="btm" src="./downbtn01.png">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="circle">
+        <div id="clock">
+            <span id="clockH">00</span>:<span id="clockM">00</span>
+        </div>
+        <div id="cat"><img src="./shiro.gif"></div>
+    </div>
+    <p id="text">press "A" to set alarm</p>
+
+    <script>
+        const date = new Date()
+        const body = document.querySelector('body')
+        const circle = document.getElementById('circle')
+        const cat = document.getElementById('cat')
+        const text = document.getElementById('text')
+        const promptBox = document.getElementById('prompt')
+        const addH = document.getElementById('addH')
+        const minusH = document.getElementById('minusH')
+        const addM = document.getElementById('addM')
+        const minusM = document.getElementById('minusM')
+        const alarmH = document.getElementById('alarmH')
+        const alarmM = document.getElementById('alarmM')
+        const set = document.getElementById('set')
+        const clockH = document.getElementById('clockH')
+        const clockM = document.getElementById('clockM')
+        const tops = document.getElementsByClassName('top')
+        const btms = document.getElementsByClassName('btm')
+        let h, m, alarmSet
+        let normal = true
+
+
+
+
+
+        const catPosition = () => {
+            const date = new Date()
+            cat.style.transform = `rotate(${date.getSeconds() * 6 + date.getMilliseconds() * 0.006}deg)`
+        }
+
+
+
+        // 15 & 45秒換造型
+        const changeCat = () => {
+            const date = new Date()
+            clockH.innerHTML = setNum(date.getHours())
+            clockM.innerHTML = setNum(date.getMinutes())
+            // console.log(date.getSeconds())
+            if (date.getSeconds() == 15) {
+                cat.innerHTML = '<img src="./kuro.gif">'
+                body.style.background = 'url(./pinksky.jpg) no-repeat center center/cover'
+                circle.style.backgroundColor = `#ffffff`
+            } else if (date.getSeconds() == 45) {
+                cat.innerHTML = '<img src="./shiro.gif">'
+                body.style.background = 'url(./Landscape.png) no-repeat center center/cover'
+                circle.style.backgroundColor = `rgb(rgb(255, 254, 241))`
+            }
+        }
+
+        // 顯示00
+        const setNum = (n) => {
+            if (n < 10 && n >= 0) {
+                n = `0${n}`
+                return n
+            }
+            return n
+        }
+
+        // 初始設定
+        const def = () => {
+            const date = new Date()
+            clockH.innerHTML = setNum(date.getHours())
+            clockM.innerHTML = setNum(date.getMinutes())
+            if (date.getSeconds() >= 15 && date.getSeconds() < 45) {
+                cat.innerHTML = '<img id="kuro" src="./kuro.gif">'
+                body.style.background = 'url(./pinksky.jpg) no-repeat center center/cover'
+                circle.style.backgroundColor = `#ffffff`
+            } else {
+                cat.innerHTML = '<img src="./shiro.gif">'
+                body.style.background = 'url(./Landscape.png) no-repeat center center/cover'
+                circle.style.backgroundColor = `rgb(255, 254, 241)`
+            }
+        }
+
+        // 單擊跳躍
+        body.addEventListener('click', function () {
+            cat.firstChild.style.top = '-125px'
+            setTimeout(function () {
+                cat.firstChild.style.top = '-75px'
+            }, 400)
+        })
+
+
+        // 雙擊後空翻
+        body.addEventListener('dblclick', function () {
+            cat.firstChild.classList.add('cart')
+            setTimeout(function () {
+                cat.firstChild.classList.remove('cart')
+            }, 1000)
+        })
+
+        //按鈕效果
+        for (img of tops) {
+            img.addEventListener('mousedown', function () {
+                this.src = "./topbtn2.png"
+            })
+            img.addEventListener('mouseup', function () {
+                this.src = "./topbtn1.png"
+            })
+        }
+
+        for (img of btms) {
+            img.addEventListener('mousedown', function () {
+                this.src = "./downbtn02.png"
+            })
+            img.addEventListener('mouseup', function () {
+                this.src = "./downbtn01.png"
+            })
+        }
+
+
+        // 設定鬧鐘prompt視窗 & esc取消鬧鐘 &其他keydown event
+        window.addEventListener("keydown", function (e) {
+
+            // A
+            if (e.keyCode == 65) {
+                promptBox.style.display = 'block'
+                const date = new Date()
+                alarmH.innerHTML = setNum(date.getHours())
+                alarmM.innerHTML = setNum(date.getMinutes())
+                text.innerText = 'press ESC to quit'
+            }
+
+            // esc
+            else if (e.keyCode == 27) {
+                promptBox.style.display = 'none'
+                if (alarmSet == true) {
+                    alarmSet = false
+                    text.innerText = 'press "A" to set alarm'
+                    body.classList.remove('shake')
+                    cat.classList.remove('rainbow')
+                    def()
+                    normal = true
+                }
+            }
+            // enter
+            else if (e.keyCode == 13 && promptBox.style.display == 'block') {
+                let h = alarmH.innerText
+                let m = alarmM.innerText
+                text.innerText = `alarm set to ${h}:${m}
+
+press ESC to reset `
+                alarmSet = true
+                let alarmInterval = setInterval(function () {
+                    const date = new Date()
+                    // console.log(alarmSet, date.getHours(), h, date.getMinutes(), m)
+                    if (alarmSet == true && date.getHours() == h && date.getMinutes() == m) {
+                        body.classList.add('shake')
+                        cat.classList.remove('sec')
+                        cat.style.removeProperty('transform')
+                        cat.classList.add('rainbow')
+                        cat.innerHTML = '<img src="./taku.gif">'
+                        normal = false
+                    } else {
+                        clearInterval(alarmInterval)
+                    }
+                }, 1, h, m)
+                promptBox.style.display = 'none'
+            }
+
+            // up
+            else if (e.keyCode == 38 && promptBox.style.display == 'block') {
+                alarmM.innerText = ((alarmM.innerText * 1 + 1) % 60 + 60) % 60
+                alarmM.innerText = setNum(alarmM.innerText)
+            }
+
+            // down
+            else if (e.keyCode == 40 && promptBox.style.display == 'block') {
+                alarmM.innerText = ((alarmM.innerText * 1 - 1) % 60 + 60) % 60
+                alarmM.innerText = setNum(alarmM.innerText)
+            }
+        })
+
+
+        // 鬧鐘時間調整
+        addH.addEventListener('click', function () {
+            alarmH.innerText = ((alarmH.innerText * 1 + 1) % 24 + 24) % 24
+            alarmH.innerText = setNum(alarmH.innerText)
+        })
+
+        minusH.addEventListener('click', function () {
+            alarmH.innerText = ((alarmH.innerText * 1 - 1) % 24 + 24) % 24
+            alarmH.innerText = setNum(alarmH.innerText)
+        })
+
+        addM.addEventListener('click', function () {
+            alarmM.innerText = ((alarmM.innerText * 1 + 1) % 60 + 60) % 60
+            alarmM.innerText = setNum(alarmM.innerText)
+        })
+
+        minusM.addEventListener('click', function () {
+            alarmM.innerText = ((alarmM.innerText * 1 - 1) % 60 + 60) % 60
+            alarmM.innerText = setNum(alarmM.innerText)
+        })
+
+        set.addEventListener('click', function () {
+            let h = alarmH.innerText
+            let m = alarmM.innerText
+            text.innerText = `alarm set to ${h}:${m}
+
+press ESC to reset `
+            alarmSet = true
+            let alarmInterval = setInterval(function () {
+                const date = new Date()
+                // console.log(alarmSet, date.getHours(), h, date.getMinutes(), m)
+                if (alarmSet == true && date.getHours() == h && date.getMinutes() == m) {
+                    body.classList.add('shake')
+                    cat.classList.remove('sec')
+                    cat.style.removeProperty('transform')
+                    cat.classList.add('rainbow')
+                    cat.innerHTML = '<img src="./taku.gif">'
+                    normal = false
+                } else {
+                    clearInterval(alarmInterval)
+                }
+            }, 1, h, m)
+            promptBox.style.display = 'none'
+        })
+
+
+        let changeCatInterval = setInterval(function () {
+            if (normal == true) {
+                changeCat()
+            }
+        }, 1000)
+        let hand = setInterval(function () {
+            if (normal == true) {
+                catPosition()
+            }
+        }, 1)
+        def()
+    </script>
+</body>
+
+</html>
